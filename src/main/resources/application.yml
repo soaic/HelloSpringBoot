@@ -1,0 +1,30 @@
+server:
+  port: 8088
+
+spring:
+  datasource:
+      username: root
+      password: root
+      url: jdbc:mysql://localhost:3306/soaic?useUnicode=true&characterEncoding=utf-8
+      driver-class-name: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+  application:
+    name: hellospringboot
+  http:
+      encoding:
+        charset: UTF-8
+        force: true
+  jackson:
+      default-property-inclusion: non_null
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.soaic.hellospringboot.entity
+
+# 分页插件配置
+pagehelper:
+ helperDialect: mysql
+ reasonable: true
+ supportMethodsArguments: true
+ params: count=countSql
+ page-size-zero: false
