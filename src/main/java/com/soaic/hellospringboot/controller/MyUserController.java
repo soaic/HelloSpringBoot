@@ -21,7 +21,7 @@ public class MyUserController {
     @Autowired
     private MyUserServices myUserServices;
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(HttpServletRequest request) {
         try {
             String userName = request.getParameter("username");
@@ -48,6 +48,24 @@ public class MyUserController {
         } catch (Exception e) {
             e.printStackTrace();
             responseResult = new ResponseResult<>(501, "failure", null);
+        }
+        return responseResult;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ResponseResult<MyUser> login(HttpServletRequest request, String userName, String password) {
+        ResponseResult<MyUser> responseResult;
+        try {
+            List<MyUser> myUser = myUserServices.login(userName, password);
+            if (myUser != null && myUser.size() > 0) {
+                request.getSession(true).setAttribute("user", myUser.get(0));
+                responseResult = new ResponseResult<>(200, "login success", myUser.get(0));
+            } else {
+                responseResult = new ResponseResult<>(501, "login failure: invalid userName or password", null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(501, "login failure: " + e.getMessage(), null);
         }
         return responseResult;
     }

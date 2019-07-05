@@ -1,6 +1,7 @@
 package com.soaic.hellospringboot.mapper;
 
 import com.soaic.hellospringboot.entity.MyUser;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 
@@ -9,6 +10,8 @@ import java.util.List;
 public interface MyUserMapper {
 
     Integer insertUser(MyUser user);
+
+    List<MyUser> login(@Param("userName") String userName, @Param("password") String password);
 
     Integer batchInsertUser(List<MyUser> users);
 

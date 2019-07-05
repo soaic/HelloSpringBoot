@@ -17,6 +17,10 @@ public class MyUserServices {
         return userMapper.insertUser(user);
     }
 
+    public List<MyUser> login(String userName, String password) {
+        return userMapper.login(userName, password);
+    }
+
     public Integer insertUser(List<MyUser> users) {
         return userMapper.batchInsertUser(users);
     }

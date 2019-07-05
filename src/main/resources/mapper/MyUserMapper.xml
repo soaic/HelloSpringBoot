@@ -13,6 +13,11 @@
         values(#{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR})
     </insert>
 
+    <select id="login" resultMap="userMap">
+        select * from user_t
+        where username = #{userName} and password = #{password}
+    </select>
+
     <insert id="batchInsertUser" useGeneratedKeys="true" keyProperty="id">
         insert into user_t (username, password) values
         <foreach item="item" collection="list" separator=",">
