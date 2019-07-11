@@ -22,18 +22,18 @@ public class MyUserController {
     private MyUserServices myUserServices;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String register(HttpServletRequest request) {
+    public ResponseResult<MyUser> register(HttpServletRequest request) {
+        ResponseResult<MyUser> responseResult;
         try {
-            String userName = request.getParameter("username");
-            String password = request.getParameter("password");
-
             MyUser user = new MyUser();
-            user.setUserName(userName);
-            user.setPassword(password);
-            return myUserServices.insertUser(user)+"";
+            user.setUserName(request.getParameter("username"));
+            user.setPassword(request.getParameter("password"));
+            myUserServices.insertUser(user);
+            responseResult = new ResponseResult<>(200, "register success!", user);
         } catch (Exception e) {
-            return e.getMessage();
+            responseResult = new ResponseResult<>(501, e.getMessage(), null);
         }
+        return responseResult;
     }
 
     @RequestMapping("/findAllUser")
@@ -66,6 +66,32 @@ public class MyUserController {
         } catch (Exception e) {
             e.printStackTrace();
             responseResult = new ResponseResult<>(501, "login failure: " + e.getMessage(), null);
+        }
+        return responseResult;
+    }
+
+    @RequestMapping("/findUser")
+    public ResponseResult<MyUser> findUser(Integer id) {
+        ResponseResult<MyUser> responseResult;
+        try {
+            MyUser myUser = myUserServices.selectUser(id);
+            responseResult = new ResponseResult<>(200, "success", myUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(501, "failure", null);
+        }
+        return responseResult;
+    }
+
+    @RequestMapping("/removeUser")
+    public ResponseResult<MyUser> removeUser(Integer id) {
+        ResponseResult<MyUser> responseResult;
+        try {
+            myUserServices.removeUser(id);
+            responseResult = new ResponseResult<>(200, "remove success", null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(501, "remove failure", null);
         }
         return responseResult;
     }

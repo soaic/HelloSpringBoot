@@ -15,7 +15,7 @@ public interface MyUserMapper {
 
     Integer batchInsertUser(List<MyUser> users);
 
-    MyUser deleteUser(Integer id);
+    Integer deleteUser(Integer id);
 
     MyUser updateUser(MyUser user);
 
@@ -27,4 +27,7 @@ public interface MyUserMapper {
     @ResultMap("com.soaic.hellospringboot.mapper.MyUserMapper.userMap")
     List<MyUser> selectUserByName(String name);
 
+    @Select("select * from user_t where username = #{0}")
+    @ResultMap("com.soaic.hellospringboot.mapper.MyUserMapper.userMap")
+    List<MyUser> selectUserByName2(String name);
 }

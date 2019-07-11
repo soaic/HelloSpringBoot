@@ -27,7 +27,7 @@
 
     <delete id="deleteUser" parameterType="java.lang.Integer">
         delete from user_t
-        where id = #id
+        where id = #{id}
     </delete>
 
     <update id="updateUser" parameterType="com.soaic.hellospringboot.entity.MyUser">

@@ -33,11 +33,33 @@ spring:
   mvc:
     favicon:
       enabled: true
+  cache:
+    type: redis
+    cache-names: soaic
+  session:
+    store-type: redis
+  redis:
+    database: 0
+    host: 192.168.0.184
+    port: 6379
+    password:
+    jedis:
+      pool:
+        #连接池支持的最大连接数
+        max-active: 1000
+        #连接池中连接用完时,新的请求等待时间,毫秒
+        max-wait: -1ms
+        #连接池中最多可空闲maxIdle个连接
+        max-idle: 400
+        min-idle: 0
+    timeout: 1000ms
 
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
   type-aliases-package: com.soaic.hellospringboot.entity
+  configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 # 分页插件配置
 pagehelper:
@@ -46,3 +68,4 @@ pagehelper:
   supportMethodsArguments: true
   params: count=countSql
   page-size-zero: false
+

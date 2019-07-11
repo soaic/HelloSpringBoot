@@ -12,5 +12,4 @@ public class IndexController {
         model.addAttribute("name", "Soaic");
         return "index";
     }
-
 }

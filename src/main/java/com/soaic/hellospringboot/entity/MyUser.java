@@ -1,6 +1,8 @@
 package com.soaic.hellospringboot.entity;
 
-public class MyUser {
+import java.io.Serializable;
+
+public class MyUser implements Serializable {
 
     private Integer id;
     private String userName;
