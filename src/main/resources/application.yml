@@ -16,12 +16,17 @@ server:
       mime-types: text/html,text/css,application/javascript,application/json
 
 spring:
+  profiles:
+    active: prod
   datasource:
     username: root
     password: root
     url: jdbc:mysql://localhost:3306/soaic?useUnicode=true&characterEncoding=utf-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/soaic?maxPoolSize=256
   application:
     name: hellospringboot
   http:
