@@ -14,15 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-/**
- *
- * 启动 redis :
- * docker run -p 6379:6379 -v $PWD/data:/data -d redis redis-server --appendonly yes
- *
- * 启动 mongoDB :
- * docker run -p 27017:27017 -v $PWD/db:/data/db -d mongo
- *
- */
 @Controller
 @SpringBootApplication
 @MapperScan("com.soaic.hellospringboot.mapper")

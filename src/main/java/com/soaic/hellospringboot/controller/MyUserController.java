@@ -6,6 +6,7 @@ import com.soaic.hellospringboot.common.PageModel;
 import com.soaic.hellospringboot.common.ResponseResult;
 import com.soaic.hellospringboot.entity.MyUser;
 import com.soaic.hellospringboot.services.MyUserServices;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@Api(description = "用户")
 public class MyUserController {
 
     @Autowired
@@ -44,6 +46,7 @@ public class MyUserController {
         return responseResult;
     }
 
+    @ApiOperation(value = "查询所有用户",notes = "查询所有用户")
     @RequestMapping(value = "/findAllUser", method = RequestMethod.GET)
     public ResponseResult<PageBean> findAllUser(PageModel pageModel) {
         ResponseResult<PageBean> responseResult;

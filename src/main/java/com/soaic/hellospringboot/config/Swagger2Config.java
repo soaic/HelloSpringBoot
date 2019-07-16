@@ -28,8 +28,8 @@ public class Swagger2Config {
     private ApiInfo apiInfo(String desc) {
         return new ApiInfoBuilder()
                 .title(desc)
-                //.description("hello swagger2")
-                //.termsOfServiceUrl("http://blog.csdn.net/h7870181")
+                //.description("")
+                .termsOfServiceUrl("")
                 .version("1.0")
                 .build();
     }
@@ -37,8 +37,8 @@ public class Swagger2Config {
     @Bean
     public Docket commonDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
-                //.groupName("API接口文档")
-                .apiInfo(apiInfo("测试环境通用接口"))
+                //.groupName("")
+                .apiInfo(apiInfo("SpringBoot测试Api"))
                 .pathMapping("/")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.soaic.hellospringboot.controller"))//指向自己的controller即可

@@ -1,5 +1,7 @@
 package com.soaic.hellospringboot.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -13,7 +15,9 @@ public class MyUser implements Serializable {
 
     @Id
     private String id;
+
     private String userName;
+
     private String password;
 
     @Field("roles")    //在文档中的名称为roles, 以数组形式存储
