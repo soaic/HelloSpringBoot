@@ -10,4 +10,5 @@ EXPOSE 8088
 ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 
-#docker build -t hellospringboot .
+# 编译：docker build -t hellospringboot .
+# 运行：docker run -d --name hellospringboot -p 8443:8443 -p 8088:8088 hellospringboot

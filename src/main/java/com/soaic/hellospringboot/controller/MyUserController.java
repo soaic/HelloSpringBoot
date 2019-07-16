@@ -6,6 +6,9 @@ import com.soaic.hellospringboot.common.PageModel;
 import com.soaic.hellospringboot.common.ResponseResult;
 import com.soaic.hellospringboot.entity.MyUser;
 import com.soaic.hellospringboot.services.MyUserServices;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,13 +24,18 @@ public class MyUserController {
     @Autowired
     private MyUserServices myUserServices;
 
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ResponseResult<MyUser> register(HttpServletRequest request) {
+    @ApiOperation(value="用户注册")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true),
+            @ApiImplicitParam(name = "password", value = "密码", required = true)
+    })
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseResult<MyUser> register(String userName, String password) {
         ResponseResult<MyUser> responseResult;
         try {
             MyUser user = new MyUser();
-            user.setUserName(request.getParameter("username"));
-            user.setPassword(request.getParameter("password"));
+            user.setUserName(userName);
+            user.setPassword(password);
             myUserServices.insertUser(user);
             responseResult = new ResponseResult<>(200, "register success!", user);
         } catch (Exception e) {
@@ -36,7 +44,7 @@ public class MyUserController {
         return responseResult;
     }
 
-    @RequestMapping("/findAllUser")
+    @RequestMapping(value = "/findAllUser", method = RequestMethod.GET)
     public ResponseResult<PageBean> findAllUser(PageModel pageModel) {
         ResponseResult<PageBean> responseResult;
         try {
@@ -52,7 +60,12 @@ public class MyUserController {
         return responseResult;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @ApiOperation(value="用户登陆")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userName", value = "用户名", required = true),
+            @ApiImplicitParam(name = "password", value = "密码", required = true)
+    })
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseResult<MyUser> login(HttpServletRequest request, String userName, String password) {
         ResponseResult<MyUser> responseResult;
         try {
@@ -70,7 +83,7 @@ public class MyUserController {
         return responseResult;
     }
 
-    @RequestMapping("/findUser")
+    @RequestMapping(value="/findUser", method = RequestMethod.GET)
     public ResponseResult<MyUser> findUser(Integer id) {
         ResponseResult<MyUser> responseResult;
         try {
@@ -83,7 +96,7 @@ public class MyUserController {
         return responseResult;
     }
 
-    @RequestMapping("/removeUser")
+    @RequestMapping(value = "/removeUser", method = RequestMethod.GET)
     public ResponseResult<MyUser> removeUser(Integer id) {
         ResponseResult<MyUser> responseResult;
         try {
