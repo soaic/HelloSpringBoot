@@ -48,4 +48,19 @@ public class UploadFileController {
             return new ResponseResult<>(501, "upload failure", e.getMessage());
         }
     }
+
+    @RequestMapping(value = "/moreFile", method = RequestMethod.POST, headers = "content-type=multipart/form-data")
+    public ResponseResult<String> uploadFileList(@RequestParam("files") MultipartFile[] multipartFiles) {
+        try {
+            //获取上传的文件数组
+            for (MultipartFile multipartFile: multipartFiles) {
+                String filePath = "/Users/soaic/"+multipartFile.getOriginalFilename();
+                FileUtils.writeByteArrayToFile(new File(filePath), multipartFile.getBytes());
+            }
+            return new ResponseResult<>(200, "upload success",null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseResult<>(501, "upload failure", e.getMessage());
+        }
+    }
 }

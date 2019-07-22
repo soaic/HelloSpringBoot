@@ -17,7 +17,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/register", "/user/login", "/error")
                 //swagger拦截过滤
-                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**");
+                .excludePathPatterns("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**")
+                .excludePathPatterns("/Desktop/**");
     }
 
     @Override
@@ -35,6 +36,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        //访问主机地址 Desktop名字要一致
+        registry.addResourceHandler("/file/**").addResourceLocations("file:/home/soaic/file/");
     }
 
 }
