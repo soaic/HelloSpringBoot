@@ -31,16 +31,19 @@ public class HellospringbootApplication {
 
         logger.info("\n----------------------------------------------------------\n\t" +
                         "Application '{}' is running! Access URLs:\n\t" +
-                        "Local: \t\thttps://localhost:{}\n\t" +
-                        "External: \thttps://{}:{}\n\t" +
-                        "Swagger2: \thttps://{}:{}/swagger-ui.html\n" +
+                        "Local: \t\thttps://localhost:{}{}\n\t" +
+                        "External: \thttps://{}:{}{}\n\t" +
+                        "Swagger2: \thttps://{}:{}{}/swagger-ui.html\n" +
                         "----------------------------------------------------------",
                 env.getProperty("spring.application.name"),
                 env.getProperty("server.port"),
+                env.getProperty("server.servlet.context-path"),
                 InetAddress.getLocalHost().getHostAddress(),
                 env.getProperty("server.port"),
+                env.getProperty("server.servlet.context-path"),
                 InetAddress.getLocalHost().getHostAddress(),
-                env.getProperty("server.port"));
+                env.getProperty("server.port"),
+                env.getProperty("server.servlet.context-path"));
     }
 
     @RequestMapping("/")

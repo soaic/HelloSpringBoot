@@ -8,7 +8,7 @@ server:
     key-alias: tomcat
     enabled: true
   servlet:
-    context-path: /
+    context-path: /hellospring
     session:
       timeout: 30m
   compression:

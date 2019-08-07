@@ -41,4 +41,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/file/**").addResourceLocations("file:/home/soaic/file/");
     }
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        //添加全局跨域配置
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowedMethods("POST", "GET", "PUT", "OPTIONS", "DELETE")
+                .maxAge(3600)
+                .allowCredentials(true);
+    }
 }

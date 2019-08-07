@@ -21,6 +21,8 @@ public class MyUser implements Serializable {
     @Field("roles")    //在文档中的名称为roles, 以数组形式存储
     private Collection<Role> roles = new LinkedHashSet<>();
 
+    private String token;
+
     public String getId() {
         return id;
     }
@@ -51,5 +53,13 @@ public class MyUser implements Serializable {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

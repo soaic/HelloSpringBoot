@@ -6,17 +6,21 @@ import com.soaic.hellospringboot.common.PageModel;
 import com.soaic.hellospringboot.common.ResponseResult;
 import com.soaic.hellospringboot.entity.MyUser;
 import com.soaic.hellospringboot.services.MyUserServices;
+import com.soaic.hellospringboot.utils.LoggerUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/user")
@@ -65,17 +69,19 @@ public class MyUserController {
 
     @ApiOperation(value="用户登陆")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userName", value = "用户名", required = true),
+            @ApiImplicitParam(name = "username", value = "用户名", required = true),
             @ApiImplicitParam(name = "password", value = "密码", required = true)
     })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseResult<MyUser> login(HttpServletRequest request, String userName, String password) {
+    public ResponseResult<MyUser> login(HttpServletRequest request, String username, String password) {
         ResponseResult<MyUser> responseResult;
         try {
-            List<MyUser> myUser = myUserServices.login(userName, password);
+            List<MyUser> myUser = myUserServices.login(username, password);
             if (myUser != null && myUser.size() > 0) {
-                request.getSession(true).setAttribute("user", myUser.get(0));
-                responseResult = new ResponseResult<>(200, "login success", myUser.get(0));
+                MyUser user = myUser.get(0);
+                user.setToken(user.getId());
+                request.getSession(true).setAttribute("user", user);
+                responseResult = new ResponseResult<>(200, "login success", user);
             } else {
                 responseResult = new ResponseResult<>(501, "login failure: invalid userName or password", null);
             }
@@ -92,6 +98,18 @@ public class MyUserController {
         try {
             MyUser myUser = myUserServices.selectUser(id);
             responseResult = new ResponseResult<>(200, "success", myUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(501, "failure", null);
+        }
+        return responseResult;
+    }
+
+    @RequestMapping(value="/info", method = RequestMethod.GET)
+    public ResponseResult<String> info(String token) {
+        ResponseResult<String> responseResult;
+        try {
+            responseResult = new ResponseResult<>(200, "success", token);
         } catch (Exception e) {
             e.printStackTrace();
             responseResult = new ResponseResult<>(501, "failure", null);
