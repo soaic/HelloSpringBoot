@@ -48,6 +48,10 @@ public class MyUserServices {
         return true;
     }
 
+    public List<MyUser> findUsers(MyUser myUser){
+        return userMapper.findUsers(myUser);
+    }
+
     public List<MyUser> login(String userName, String password) {
         return userMapper.login(userName, password);
     }

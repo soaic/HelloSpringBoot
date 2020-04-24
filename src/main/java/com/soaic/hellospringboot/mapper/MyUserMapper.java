@@ -21,6 +21,8 @@ public interface MyUserMapper {
 
     MyUser selectUser(Integer id);
 
+    List<MyUser> findUsers(@Param("user") MyUser user);
+
     List<MyUser> selectAllUser();
 
     @Select("select * from user_t where username like CONCAT('%',#{0},'%')")

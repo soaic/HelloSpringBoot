@@ -44,4 +44,17 @@
         select * from user_t
     </select>
 
+    <select id="findUsers" parameterType="com.soaic.hellospringboot.entity.MyUser" resultMap="userMap">
+        select * from user_t 
+        where 1 = 1
+        <if test="user.id != null">
+            and id like '%${user.id}%'
+        </if>
+        <if test="user.username != null">
+            and username like '%${user.userName}%'
+        </if>
+        <if test="user.password != null">
+            and password like '%${user.password}%'
+        </if>
+    </select>
 </mapper>

@@ -92,12 +92,42 @@ public class MyUserController {
         return responseResult;
     }
 
+    @ApiOperation(value="用户登出")
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ResponseResult<String> logout(HttpServletRequest request) {
+        ResponseResult<String> responseResult;
+        try {
+            request.getSession(true).removeAttribute("user");
+            responseResult = new ResponseResult<>(200, "logout success",null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(501, "logout failure: " + e.getMessage(), null);
+        }
+        return responseResult;
+    }
+
     @RequestMapping(value="/findUser", method = RequestMethod.GET)
     public ResponseResult<MyUser> findUser(Integer id) {
         ResponseResult<MyUser> responseResult;
         try {
             MyUser myUser = myUserServices.selectUser(id);
             responseResult = new ResponseResult<>(200, "success", myUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseResult = new ResponseResult<>(501, "failure", null);
+        }
+        return responseResult;
+    }
+
+    @RequestMapping(value="/findUsers", method = RequestMethod.GET)
+    public ResponseResult<PageBean> findUsers(PageModel pageModel, MyUser myUser) {
+        ResponseResult<PageBean> responseResult;
+        try {
+            PageHelper.startPage(pageModel.getPageNum(), pageModel.getPageSize());
+            PageHelper.orderBy("id asc");
+            List<MyUser> myUsers = myUserServices.findUsers(myUser);
+            PageBean<MyUser> pageInfo = new PageBean<>(myUsers);
+            responseResult = new ResponseResult<>(200, "success", pageInfo);
         } catch (Exception e) {
             e.printStackTrace();
             responseResult = new ResponseResult<>(501, "failure", null);

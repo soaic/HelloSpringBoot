@@ -45,7 +45,7 @@ spring:
     store-type: redis
   redis:
     database: 0
-    host: 192.168.0.184
+    host: 192.168.0.188
     port: 6379
     password:
     jedis:
